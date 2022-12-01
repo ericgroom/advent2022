@@ -21,11 +21,12 @@ defmodule Mix.Tasks.NewDay do
       use Advent2022.Day
 
       def part_one(input) do
-        raise "todo"
+        input
       end
 
       def parse(raw) do
         raw
+        |> Parser.parse_list(&String.to_integer/1)
       end
     end
     """)
@@ -35,17 +36,20 @@ defmodule Mix.Tasks.NewDay do
       use ExUnit.Case, async: true
       alias Advent2022.Days.Day#{day_no}
 
-      @example_input 42
+      @example_input \"""
+      42
+      \"""
+      |> Day#{day_no}.parse()
 
       describe "part_one" do
         test "example input" do
-          assert Day#{day_no}.part_one(@example_input) == 42
+          assert Day#{day_no}.part_one(@example_input) == [42]
         end
       end
 
       describe "part_two" do
         test "example input" do
-          # assert Day#{day_no}.part_two(@example_input) == 42
+          # assert Day#{day_no}.part_two(@example_input) == [42]
         end
       end
     end
