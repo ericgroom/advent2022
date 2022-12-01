@@ -18,9 +18,6 @@ defmodule Advent2022.Days.Day1 do
 
   def parse(raw) do
     raw
-    |> String.split("\n\n", trim: true)
-    |> Enum.map(fn line ->
-      String.split(line, "\n", trim: true) |> Enum.map(&String.to_integer/1)
-    end)
+    |> Parser.parse_nested_list(&String.to_integer/1)
   end
 end
