@@ -1,21 +1,17 @@
 # Advent2022
 
-**TODO: Add description**
+My solutions to Advent of Code 2022 in Elixir
 
-## Installation
+## Wtf is Elixir?
+Elixir is a pragmatic functional programming language with an awesome standard library (why I use it for Advent of Code) and easy concurrency.
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `advent2022` to your list of dependencies in `mix.exs`:
+## Where is the code for each day?
+Under lib/days
 
-```elixir
-def deps do
-  [
-    {:advent2022, "~> 0.1.0"}
-  ]
-end
-```
-
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at <https://hexdocs.pm/advent2022>.
-
+## How do I run this?
+1. Clone the repo
+2. Install elixir/erlang (if you have `asdf` just run `asdf install` in the repo!)
+3. Run:
+  * `mix run_days` to run all the days
+  * `mix run_days 25` to run a specific day
+  * `mix test` to run all my tests (which include all example and real inputs)
