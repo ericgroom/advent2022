@@ -7,9 +7,7 @@ defmodule Advent2022.Day do
       @behaviour unquote(__MODULE__)
       @day_module __MODULE__
       @day_no Advent2022.Day.parse_day_from_module_name(@day_module)
-      @inputs_dir unquote(__DIR__) |> Path.join("inputs")
-      @input_file @inputs_dir |> Path.join("day_" <> Integer.to_string(@day_no) <> ".txt")
-      @input File.read!(@input_file)
+      @input Advent2022.Inputs.input(@day_no)
 
       Module.register_attribute(__MODULE__, :day, persist: true)
       Module.put_attribute(__MODULE__, :day, @day_no)
