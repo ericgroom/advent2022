@@ -1,5 +1,4 @@
 defmodule Advent2022.Inputs do
-  alias Hex.Application
   @inputs_dir __DIR__ |> Path.join("inputs")
 
   def input(day_no) do
@@ -22,10 +21,9 @@ defmodule Advent2022.Inputs do
     path_to_file = input_path(day_no)
 
     headers = [
-      {'cookie', session_token()}
+      {'cookie', session_token()},
+      {'user-agent', "github.com/ericgroom/advent2022 by bcgroom@gmail.com"}
     ]
-
-    raise headers
 
     if File.exists?(path_to_file) do
       raise "input file already exists!"
