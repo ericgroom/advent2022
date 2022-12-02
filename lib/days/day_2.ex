@@ -43,7 +43,7 @@ defmodule Advent2022.Days.Day2 do
     plays
     |> Enum.map(fn play ->
       did_win = won?(play)
-      {theirs, mine} = play
+      {_theirs, mine} = play
 
       score2 =
         case mine do
