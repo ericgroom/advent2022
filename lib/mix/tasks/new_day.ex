@@ -1,12 +1,12 @@
 defmodule Mix.Tasks.NewDay do
   use Mix.Task
 
-  def run([day_no]) do
+  def run([day_no | rest]) do
     day_no = String.to_integer(day_no)
 
     root = File.cwd!()
     day_source_path = Path.join([root, "lib", "days", "day_#{day_no}.ex"])
-    day_input_path = Path.join([root, "lib", "inputs", "day_#{day_no}.txt"])
+    day_input_path = Advent2022.Inputs.input_path(day_no)
     day_test_path = Path.join([root, "test", "days", "day_#{day_no}_test.exs"])
 
     if File.exists?(day_source_path) or File.exists?(day_input_path) or
@@ -14,7 +14,13 @@ defmodule Mix.Tasks.NewDay do
       raise "One more more files already exist for this day, exiting"
     end
 
-    File.touch!(day_input_path)
+    case rest do
+      ["n" | _] ->
+        File.touch!(day_input_path)
+
+      _ ->
+        Advent2022.Inputs.download_input(day_no)
+    end
 
     File.write!(day_source_path, """
     defmodule Advent2022.Days.Day#{day_no} do
