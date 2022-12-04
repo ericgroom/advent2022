@@ -8,6 +8,7 @@ defmodule Advent2022.Day do
       @day_module __MODULE__
       @day_no Advent2022.Day.parse_day_from_module_name(@day_module)
       @input Advent2022.Inputs.input(@day_no)
+      @external_resource Advent2022.Inputs.input_path(@day_no)
 
       Module.register_attribute(__MODULE__, :day, persist: true)
       Module.put_attribute(__MODULE__, :day, @day_no)
