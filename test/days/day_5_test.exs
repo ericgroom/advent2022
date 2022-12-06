@@ -3,8 +3,8 @@ defmodule Advent2022.Days.Day5Test do
   alias Advent2022.Days.Day5
 
   @example_input """
-                     [D]
-                 [N] [C]
+                     [D]\s\s\s
+                 [N] [C]\s\s\s
                  [Z] [M] [P]
                   1   2   3
 

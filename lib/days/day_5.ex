@@ -16,8 +16,7 @@ defmodule Advent2022.Days.Day5 do
     {to_move, new_from} = Enum.split(from_column, quantity)
     new_to = Enum.reverse(to_move) ++ to_column
 
-    Map.put(columns, from, new_from)
-    |> Map.put(to, new_to)
+    %{columns | from => new_from, to => new_to}
   end
 
   defp move_multiple(columns, from, to, quantity) do
@@ -27,8 +26,7 @@ defmodule Advent2022.Days.Day5 do
     {to_move, new_from} = Enum.split(from_column, quantity)
     new_to = to_move ++ to_column
 
-    Map.put(columns, from, new_from)
-    |> Map.put(to, new_to)
+    %{columns | from => new_from, to => new_to}
   end
 
   defp follow_instructions(columns, instructions, mover) do
@@ -58,35 +56,20 @@ defmodule Advent2022.Days.Day5 do
         }
       end)
 
-    [column_indicies | stack_rows] =
+    stack_columns =
       stacks_raw
       |> String.split("\n", trim: true)
+      |> Enum.map(&String.slice(&1, 1..-1//4))
       |> Enum.map(&String.graphemes/1)
-      |> Enum.reverse()
-
-    column_to_string_index =
-      Enum.reduce(Enum.with_index(column_indicies), %{}, fn {el, str_index}, acc ->
-        case Integer.parse(el) do
-          :error -> acc
-          {col_index, ""} -> Map.put(acc, col_index, str_index)
-        end
-      end)
+      |> Enum.zip_with(& &1)
 
     columns =
-      Enum.map(column_to_string_index, fn {col_index, str_index} ->
-        stack =
-          Enum.reduce(stack_rows, [], fn row, stack ->
-            letter = Enum.at(row, str_index)
-
-            case letter do
-              " " -> stack
-              nil -> stack
-              value -> [value | stack]
-            end
-          end)
-
-        {col_index, stack}
+      stack_columns
+      |> Enum.map(fn column ->
+        Enum.reject(column, &(&1 == " "))
       end)
+      |> Enum.with_index()
+      |> Enum.map(fn {col, index} -> {index + 1, col} end)
       |> Map.new()
 
     {columns, instructions}
