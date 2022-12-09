@@ -5,34 +5,19 @@ defmodule Advent2022.Days.Day9 do
   def part_one(input) do
     # H - T gives vector pointing to H, if magnitude > 1, normalize and move T
     input
-    |> flatten_instructions()
-    |> Enum.reduce(%{head: {0, 0}, tail: {0, 0}, tail_set: MapSet.new()}, fn direction,
-                                                                             %{
-                                                                               head: head,
-                                                                               tail: tail,
-                                                                               tail_set: tail_set
-                                                                             } ->
-      new_head = Vec2D.add(head, direction)
-      steering = Vec2D.subtract(new_head, tail)
-
-      new_tail =
-        if trunc(Vec2D.magnitude(steering)) > 1 do
-          {sx, sy} = steering
-          Vec2D.add(tail, {clamp(sx, -1, 1), clamp(sy, -1, 1)})
-        else
-          tail
-        end
-
-      %{head: new_head, tail: new_tail, tail_set: MapSet.put(tail_set, new_tail)}
-    end)
-    |> then(fn %{tail_set: tail_set} -> Enum.count(tail_set) end)
+    |> simulate_rope(2)
   end
 
   def part_two(input) do
     input
+    |> simulate_rope(10)
+  end
+
+  defp simulate_rope(instructions, rope_length) do
+    instructions
     |> flatten_instructions()
     |> Enum.reduce(
-      %{head: {0, 0}, tails: for(_ <- 1..9, do: {0, 0}), tail_set: MapSet.new()},
+      %{head: {0, 0}, tails: for(_ <- 1..(rope_length - 1), do: {0, 0}), tail_set: MapSet.new()},
       fn direction,
          %{
            head: head,
@@ -67,8 +52,6 @@ defmodule Advent2022.Days.Day9 do
     )
     |> then(fn %{tail_set: tail_set} -> Enum.count(tail_set) end)
   end
-
-  def debug_grid(head, tail, visited) when is_tuple(tail), do: debug_grid(head, [tail], visited)
 
   def debug_grid(head, tail, visited) do
     combo = [head | tail] ++ Enum.to_list(visited)
