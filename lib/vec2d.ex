@@ -15,8 +15,16 @@ defmodule Advent2022.Vec2D do
     :math.sqrt(x * x + y * y)
   end
 
-  def normalize({x, y}) do
-    mag = magnitude({x, y})
+  def chebyshev_magnitude({x, y}) do
+    max(abs(x), abs(y))
+  end
+
+  def normalize({x, y}, magnitude \\ &magnitude/1) do
+    mag = magnitude.({x, y})
     {x / mag, y / mag}
+  end
+
+  def round({x, y}) do
+    {Kernel.round(x), Kernel.round(y)}
   end
 end

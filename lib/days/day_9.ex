@@ -31,9 +31,11 @@ defmodule Advent2022.Days.Day9 do
             steering = Vec2D.subtract(head, tail)
 
             new_tail =
-              if trunc(Vec2D.magnitude(steering)) > 1 do
-                {sx, sy} = steering
-                Vec2D.add(tail, {clamp(sx, -1, 1), clamp(sy, -1, 1)})
+              if Vec2D.chebyshev_magnitude(steering) > 1 do
+                Vec2D.add(
+                  tail,
+                  Vec2D.normalize(steering, &Vec2D.chebyshev_magnitude/1) |> Vec2D.round()
+                )
               else
                 tail
               end
@@ -87,10 +89,6 @@ defmodule Advent2022.Days.Day9 do
     Enum.flat_map(instructions, fn {direction, steps} ->
       for _ <- 1..steps, do: direction
     end)
-  end
-
-  defp clamp(num, min, max) do
-    num |> max(min) |> min(max)
   end
 
   def parse(raw) do
