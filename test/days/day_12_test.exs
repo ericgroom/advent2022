@@ -2,6 +2,8 @@ defmodule Advent2022.Days.Day12Test do
   use ExUnit.Case, async: true
   alias Advent2022.Days.Day12
 
+  @moduletag timeout: :infinity
+
   @example_input """
                  Sabqponm
                  abcryxxl
