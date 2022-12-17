@@ -19,6 +19,10 @@ defmodule Advent2022.Vec2D do
     max(abs(x), abs(y))
   end
 
+  def manhattan_magnitude({x, y}) do
+    abs(x) + abs(y)
+  end
+
   def normalize({x, y}, magnitude \\ &magnitude/1) do
     mag = magnitude.({x, y})
     {x / mag, y / mag}
